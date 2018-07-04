@@ -42,3 +42,4 @@ before_install:
 script:
   - pytest
   - pushd nixpy; python setup.py test; popd;
+  - pushd nixpy; python setup.py test --addopts "--force-compat -s -k 'test_full_file_read'"; popd;
