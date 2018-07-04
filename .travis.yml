@@ -42,3 +42,4 @@ install:
 script:
     - ./writefullfile test.nix
     - ./writebunchofstuff lotsofdas.nix
+    - python test_stuff.py
