@@ -40,4 +40,4 @@ install:
     - python compile.py .
 
 script:
-    ./writefullfile
+    ./writefullfile test.nix
