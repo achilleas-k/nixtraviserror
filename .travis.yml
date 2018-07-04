@@ -8,9 +8,9 @@ env:
     - NIX_BRANCH=1.4
 
 matrix:
-    include:
-        - python: "3.6"
-          os: linux
+  include:
+    - python: "3.6"
+      os: linux
 
 
 addons:
@@ -23,21 +23,21 @@ addons:
 
 
 before_install:
-    - git clone --branch ${NIX_BRANCH} https://github.com/G-Node/nix libnix
-    - pushd libnix
-    - mkdir build
-    - pushd build
-    - nixprefix="/usr/local"
-    - cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
-    - make
-    - sudo make install
-    - popd
-    - popd
-    - export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${nixprefix}/lib/pkgconfig
-    - git clone --branch windows-xcomp-tests https://github.com/achilleas-k/nixpy
-    - pushd nixpy
-    - python setup.py install
-    - popd
+  - git clone --branch ${NIX_BRANCH} https://github.com/G-Node/nix libnix
+  - pushd libnix
+  - mkdir build
+  - pushd build
+  - nixprefix="/usr/local"
+  - cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
+  - make
+  - sudo make install
+  - popd
+  - popd
+  - export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${nixprefix}/lib/pkgconfig
+  - git clone --branch windows-xcomp-tests https://github.com/achilleas-k/nixpy
+  - pushd nixpy
+  - python setup.py install
+  - popd
 
 script:
-    - pytest
+  - pytest
