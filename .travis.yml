@@ -23,6 +23,7 @@ addons:
 
 
 before_install:
+  # build and install nix
   - git clone --branch ${NIX_BRANCH} https://github.com/G-Node/nix libnix
   - pushd libnix
   - mkdir build
@@ -34,12 +35,12 @@ before_install:
   - popd
   - popd
   - export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${nixprefix}/lib/pkgconfig
+  # build and install nixpy
   - git clone --branch windows-xcomp-tests https://github.com/achilleas-k/nixpy
   - pushd nixpy
   - python setup.py install
   - popd
 
 script:
-  - pytest
-  - pushd nixpy; python setup.py test; popd;
-  - pushd nixpy; python setup.py test --addopts "--force-compat -s -k 'test_full_file_read'"; popd;
+  - cd nixpy
+  - python setup.py test --addopts "--force-compat -s"
