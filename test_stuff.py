@@ -2,7 +2,7 @@ import os
 from subprocess import Popen, PIPE
 import tempfile
 
-from compile import maketests
+from .compile import maketests
 
 
 BINDIR = tempfile.mkdtemp(prefix="nixpy-tests-")
