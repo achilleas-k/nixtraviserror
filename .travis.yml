@@ -41,3 +41,4 @@ before_install:
 
 script:
   - pytest
+  - pushd nixpy; python setup.py test; popd;
