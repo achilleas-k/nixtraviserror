@@ -38,7 +38,7 @@ before_install:
   # build and install nixpy
   - git clone --branch windows-xcomp-tests https://github.com/achilleas-k/nixpy
   - pushd nixpy
-  - python setup.py install
+  - python setup.py build
   - popd
 
 script:
