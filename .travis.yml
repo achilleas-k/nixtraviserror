@@ -1,0 +1,41 @@
+sudo: required
+dist: trusty
+
+language: python
+
+env:
+  global:
+    - NIX_BRANCH=1.4
+
+matrix:
+    - languge: generic
+      os: linux
+
+addons:
+  apt:
+    packages:
+      - cmake
+      - libcppunit-dev
+      - libhdf5-serial-dev
+      - libboost-all-dev
+
+
+before_install:
+    - git clone --branch ${NIX_BRANCH} https://github.com/G-Node/nix libnix;
+    - pushd libnix;
+    - mkdir build;
+    - pushd build;
+    - nixprefix="/usr/local";
+    - cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..;
+    - make;
+    - sudo make install;
+    - popd;
+    - popd;
+    - export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${nixprefix}/lib/pkgconfig;
+
+
+install:
+    - python compile.py .
+
+script:
+    ./writefullfile
