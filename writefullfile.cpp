@@ -55,6 +55,7 @@ int main(int argc, char* argv[]) {
 
     block = nf.getBlock(0);
     std::vector<double> datadbl = {1, 2, 10, 9, 1, 3};
+    std::cerr << "bunchodata" << std::endl;
     auto da = block.createDataArray("bunchodata", "recordings", nix::DataType::Double, nix::NDSize{2, 3});
     da.setData(nix::DataType::Double, datadbl.data(), nix::NDSize{2, 3}, nix::NDSize{0, 0});
     da.definition("A silly little data array");
@@ -67,6 +68,7 @@ int main(int argc, char* argv[]) {
     group.addDataArray(da);
 
     datadbl = {0.4, 0.41, 0.49, 0.1, 0.1, 0.1};
+    std::cerr << "feat-da" << std::endl;
     auto featda = block.createDataArray("feat-da", "tag-feature", nix::DataType::Double, nix::NDSize{6});
     featda.setData(nix::DataType::Double, datadbl.data(), nix::NDSize{6}, nix::NDSize{0});
     auto tag = block.createTag("tagu", "tagging", {1, 0});
@@ -77,6 +79,7 @@ int main(int argc, char* argv[]) {
     group.addTag(tag);
     tag.createFeature(featda, nix::LinkType::Untagged);
 
+    std::cerr << "mtagu" << std::endl;
     auto mtag = block.createMultiTag("mtagu", "multi tagging", block.createDataArray("tag-data", "multi-tagger", nix::DataType::Double, nix::NDSize{1, 3}));
     datadbl = {0, 0.1, 10.1};
     // MultiTag positions array
@@ -89,6 +92,7 @@ int main(int argc, char* argv[]) {
 
     // MultiTag extents array
     datadbl = {0.5, 0.5, 0.5};
+    std::cerr << "tag-extents" << std::endl;
     da = block.createDataArray("tag-extents", "multi-tagger", nix::DataType::Double, nix::NDSize{1, 3});
     da.setData(nix::DataType::Double, datadbl.data(), nix::NDSize{1, 3}, nix::NDSize{0, 0});
     mtag.extents(da);
@@ -97,6 +101,7 @@ int main(int argc, char* argv[]) {
     da.appendSetDimension();
 
     std::vector<int64_t> datai64 = {100, 200, 210, 3};
+    std::cerr << "FA001" << std::endl;
     da = nf.getBlock(1).createDataArray("FA001", "Primary data", nix::DataType::Int64, nix::NDSize{4});
     da.setData(nix::DataType::Int64, datai64.data(), nix::NDSize{4}, nix::NDSize{0});
     da.definition("Some random integers");
@@ -141,9 +146,11 @@ int main(int argc, char* argv[]) {
     tag.extent({1920, 1080});
     tag.units({"mm", "mm"});
 
+    std::cerr << "some-sort-of-image" << std::endl;
     auto png = block.createDataArray("some-sort-of-image?", "png", nix::DataType::Double, nix::NDSize{3840, 2160});
     tag.createFeature(png, nix::LinkType::Indexed);
 
+    std::cerr << "nu-pos" << std::endl;
     auto newmtpositions = block.createDataArray("nu-pos", "multi-tag-positions", nix::DataType::Double, nix::NDSize{10, 3});
     auto newmtag = block.createMultiTag("nu-mt", "multi-tag (new)", newmtpositions);
     group.addTag(tag);
@@ -152,6 +159,7 @@ int main(int argc, char* argv[]) {
     // Data with RangeDimension
     std::vector<int32_t> datai32 = {0, 1, 23};
     block = nf.getBlock(2);
+    std::cerr << "the ticker" << std::endl;
     da = block.createDataArray("the ticker", "range-dim-array", nix::DataType::Int32, nix::NDSize{3});
     da.setData(nix::DataType::Int32, datai32.data(), nix::NDSize{3}, nix::NDSize{0});
     da.unit("uA");
@@ -164,7 +172,9 @@ int main(int argc, char* argv[]) {
 
     // Alias RangeDimension
     block = nf.getBlock(1);
+    std::cerr << "alias da" << std::endl;
     da = block.createDataArray("alias da", "dimticks", nix::DataType::Int32, nix::NDSize{24});
+    std::cerr << "alias da OK" << std::endl;
     datadbl.clear();
     for (idx = 0; idx < 24; idx++)
         datadbl.push_back(3+(idx*0.5));
@@ -192,6 +202,7 @@ int main(int argc, char* argv[]) {
     othermd.createProperty("string", nix::Value("I am a string. Rawr."));
     othermd.createProperty("strings", {nix::Value("one"), nix::Value("two"), nix::Value("twenty")});
 
+    std::cerr << "Doing data types" << std::endl;
     // All types of data
     block = nf.createBlock("datablock", "block of data");
 
