@@ -8,8 +8,10 @@ env:
     - NIX_BRANCH=1.4
 
 matrix:
-    - languge: generic
-      os: linux
+    include:
+        - python: "3.6"
+          os: linux
+
 
 addons:
   apt:
