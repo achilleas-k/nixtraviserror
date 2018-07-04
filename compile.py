@@ -84,4 +84,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     dest = sys.argv[1]
-    sys.exit(maketests(dest))
+    sys.exit(not maketests(dest))
