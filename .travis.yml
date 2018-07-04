@@ -40,4 +40,5 @@ install:
     - python compile.py .
 
 script:
-    ./writefullfile test.nix
+    - ./writefullfile test.nix
+    - ./writebunchofstuff lotsofdas.nix
