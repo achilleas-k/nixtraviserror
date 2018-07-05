@@ -9,18 +9,9 @@ env:
 
 matrix:
   include:
-    # - python: "2.7"
-    #   os: linux
-    #   env: pymajor=2
-    # - python: "3.6"
-    #   os: linux
-    #   env: pymajor=3 coveralls=1
-    # - language: generic
-    #   os: osx
-    #   env: pymajor=2
-    - language: generic
-      os: osx
-      env: pymajor=3
+    - python: "3.6"
+      os: linux
+
 
 addons:
   apt:
@@ -30,21 +21,11 @@ addons:
       - libhdf5-serial-dev
       - libboost-all-dev
 
+
 before_install:
-  - export NIX_INCDIR=${nixprefix}/include
-  - export NIX_LIBDIR=${nixprefix}/lib
-  - export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${nixprefix}/lib/pkgconfig
-  - if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      brew upgrade cmake boost;
-      brew install cppunit hdf5;
-      if [[ "${pymajor}" == "3" ]]; then
-        brew upgrade python${pymajor} || true;
-      else
-        alias pip2='pip';
-      fi;
-    fi
-  - git clone --branch ${NIX_BRANCH} https://github.com/G-Node/nix /tmp/libnix
-  - pushd /tmp/libnix
+  # build and install nix
+  - git clone --branch ${NIX_BRANCH} https://github.com/G-Node/nix libnix
+  - pushd libnix
   - mkdir build
   - pushd build
   - nixprefix="/usr/local"
@@ -53,13 +34,13 @@ before_install:
   - sudo make install
   - popd
   - popd
-  - which pip${pymajor}
-  - pip${pymajor} install --upgrade --no-binary ":all:" numpy coveralls h5py
-  - which python${pymajor}
-  - python${pymajor} --version
-
-install:
-  - python${pymajor} setup.py build
+  - export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${nixprefix}/lib/pkgconfig
+  # build and install nixpy
+  - git clone --branch windows-xcomp-tests https://github.com/achilleas-k/nixpy
+  - pushd nixpy
+  - python setup.py build
+  - popd
 
 script:
-  - python${pymajor} setup.py test
+  - cd nixpy
+  - python setup.py test --addopts "--force-compat -s"
