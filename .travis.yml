@@ -1,16 +1,12 @@
 sudo: required
 dist: trusty
 
-language: python
+language: generic
+os: osx
 
 env:
   global:
     - NIX_BRANCH=1.4
-
-matrix:
-  include:
-    - python: "3.6"
-      os: linux
 
 
 addons:
